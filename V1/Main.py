@@ -8,14 +8,21 @@ teamPlayerList = [[],[],[],[]]
 playerScoreDict = {}
 
 # holds the academic and sporty TEAM events
-teamEventList = [[],[]]
+teamEventList = [["Pub Quiz", "Treasure hunt"],["Football", "Rounders", "Relay"]]
 
 # holds the academic and sporty SOLO events
-playerEventList = [["Spelling bee","Treasure hunt"],["Sack race", "Running", "Egg and Spoon race"]]
+soloEventList = [["Spelling bee","Treasure hunt"],["Sack race", "Running", "Egg and Spoon race"]]
 
 # tracks the SOLO players taking part in each event
 eventPlayersList=[[],[],[],[],[]]
 
+teamPoints = [15,10,8,4]
+
+soloPoints = [15, 12,10, 8, 6, 3]
+
+
+print(teamEventList)
+print(soloEventList)
 
 print("TEAM INTRO")
 # NOTE COMMENT CODE BACK IN LATER
@@ -52,7 +59,7 @@ print("TEAM INTRO")
 
 
 counter = 0
-
+# user enters players for solo events
 while True:
 
     if counter == 20:
@@ -106,4 +113,5 @@ while True:
                 print("INVALID INPUT")
 
         counter += 1
+
 
