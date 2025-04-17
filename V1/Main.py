@@ -1,10 +1,25 @@
-
+#tracks each teams score
 teamScoreDict = {}
+
+# tracks the names of players in each team
 teamPlayerList = [[],[],[],[]]
+
+# tracks the scores for each solo player
 playerScoreDict = {}
+
+# holds the academic and sporty TEAM events
+teamEventList = [[],[]]
+
+# holds the academic and sporty SOLO events
+playerEventList = [[],[]]
+
+# tracks the SOLO players taking part in each event
+eventPlayersList=[[],[],[],[],[]]
+
 
 print("TEAM INTRO")
 
+# whle loop for adding each team and asigning their players
 while True:
 
     # Loops for each team
@@ -16,7 +31,6 @@ while True:
 
             # loops untill valid player is added to team
             while True:
-
 
                 userInput = input(f"Enter the name for player {playerNumber} >>> ")
                 
@@ -32,8 +46,10 @@ while True:
                 else:
                     teamPlayerList[int(teamNumber)-1].append(userInput)
                     break
-                
-        print(teamPlayerList)
+        
+        print(f"Members of team {teamNumber} are: {teamPlayerList[int(teamNumber)-1]} \n\n\n")
     break
+
+
 
 
