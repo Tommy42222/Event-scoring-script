@@ -7,7 +7,6 @@ teamPlayerList = [[],[],[],[]]
 # tracks the scores for each solo player
 playerScoreDict = {}
 
-
 # tracks the SOLO players taking part in each event
 eventPlayersList=[[],[],[],[],[]]
 
@@ -15,7 +14,7 @@ teamPoints = [15,10,8,4]
 
 soloPoints = [15, 12,10, 8, 6, 3]
 
-
+###############################################################################################################
 
 print("TEAM INTRO")
 
@@ -53,6 +52,7 @@ print("TEAM INTRO")
 #     break
 
 
+###############################################################################################################
 
 # NOTE add player section starts here
 
@@ -112,9 +112,12 @@ print("TEAM INTRO")
 
 #         counter += 1
 
+
+###############################################################################################################
+
 # holds the academic and sporty events, first list is solo, second is team
 EventsList = [
-                 [[],[]], # Solo events
+                 [[1],[]], # Solo events
                  [[],[]]  # Team events
                  ]
 
@@ -171,8 +174,8 @@ while True:
 
 
     print(output)
-    
 
-            
+
+###############################################################################################################           
 
 print("this is the end")
