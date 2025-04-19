@@ -3,26 +3,29 @@ teamScoreDict = {"team1":0,"team2":0,"team3":0,"team4":0}
 
 teamPlacementList = []
 # tracks the scores for each solo player
-playerScoreDict = {}
+playerScoreDict = {"a":0, "b":0,"c":0,"d":0,"e":0,"g":0,"z":0}
 
 playerPlacementList = []
 # tracks the names of players in each team
 teamPlayerList = [[],[],[],[]]
 
 # tracks the SOLO players taking part in each event
-eventPlayersList=[[],[],[],[],[]]
+eventPlayersList=[["a","e","d","b","c",],["a","e","d","b","c","g"],["a","e","d","b","c","z"],["a","e","d","b","c","g"],["a","e","d","b","c",]]
 
 teamPoints = [15,10,8,4]
 
-soloPoints = [15, 12,10, 8, 6, 3]
+soloPoints = [15,12,10, 8, 6, 3]
+
+
+
 
 ###################################==-- ADD TEAMS AND THEIR PLAYERS --==########################################################################
 
-print("TEAM INTRO")
+# print("TEAM INTRO")
 
-# NOTE COMMENT CODE BACK IN LATER
+# # NOTE COMMENT CODE BACK IN LATER
 
-# whle loop for adding each team and asigning their players
+# # whle loop for adding each team and asigning their players
 # while True:
 
 #     # Loops for each team
@@ -57,9 +60,9 @@ print("TEAM INTRO")
 #     break
 
 
-#######################################==-- ADD SOLO PLAYERS AND ASIGN THEM EVENTS --==########################################################################
+######################################==-- ADD SOLO PLAYERS AND ASIGN THEM EVENTS --==########################################################################
 
-# NOTE add player section starts here
+# # NOTE add player section starts here
 
 # counter = 0
 # # user enters players for solo events
@@ -73,15 +76,21 @@ print("TEAM INTRO")
 
 #     # checks if stop command is given and if 5 or more players are added, if yes, break
 #     if userInputplayer == "stop" or userInputplayer == "-":
-#         if counter < 5:
-#             print("At least 5 players must be added before moving on... Please try again\n")
-#             print(f"you have entered {counter} Players, you need at least 5 to move on\n\n")
 
-#         else:
+#         if all(len(sublist) >= 5 for sublist in eventPlayersList):
+        
 #             print("stop commaned detected, moving on...")
 #             break
+#         else:
+#             print("At least 5 players must be added before moving on... Please try again\n")
+#             print(f"you have entered {counter} Players, you need at least 5 to move on\n\n")
+#             print(eventPlayersList, end= " ")
 
 #     # Same validation as the last section
+   
+#     elif userInputplayer == "pl":
+#         print(eventPlayersList)
+   
 #     elif userInputplayer in playerScoreDict:
 
 #         print(f"A player called {userInputplayer} already exists, please try again")
@@ -122,9 +131,11 @@ print("TEAM INTRO")
 
 # holds the academic and sporty events, first list is solo, second is team
 EventsList = [
-                 [[],[]], # Solo events
-                 [["gang war","cooking"],["hitting on your sister"]]  # Team events
+                 [["pass","piss"],["balls","snogging","rim-job"]], # Solo events
+                 [["dick","fucking"],["kissing on your sister","kicking me in the balls","dying"]]  # Team events
                  ]
+
+flattenedSoloEventsList = [item for sublist in EventsList[0] for item in sublist]
 
 
 
@@ -161,7 +172,7 @@ while True:
                 if EventsList[userInput-1][1] == []:
                     print("This group have performed all their events. But, there are still events in the other group")
                     output = EventsList[userInput % 2][1]
-                    eventType = userInput + 1 % 2
+                    eventType = (userInput + 1) % 2
                     break
         
                 else:
@@ -174,7 +185,7 @@ while True:
             else:    
                 print("acmd empty: here are the remainging acmd events in the other group\n")
                 output = EventsList[userInput % 2][0]
-                eventType = userInput + 1 % 2
+                eventType = (userInput + 1) % 2
                 break
         
 
@@ -189,16 +200,51 @@ while True:
        
         output.remove(userInputEvent)
        
-        print("\n\n{EventsList}")
+
         
     else:
         print("Invalid selection, please try again")
-###############################################################################################################           
+#####################################==-- Solo event placement --==###################################################################           
+    try:
+        eventIndex = flattenedSoloEventsList.index(userInputEvent)
+    except ValueError:
+        pass
+    else:
+        print(eventPlayersList[eventIndex])
 
 
     if eventType == 1:
-        pass
+        print(f"The next SOLO event is {selectedEvent}!")
 
+
+        for i in range(1,6):
+            while True:
+
+                userInputPlayerSelect = input(f"Which player came in {i} Position?\n>>> ")
+                
+
+
+
+                if userInputPlayerSelect in eventPlayersList[eventIndex] and userInputPlayerSelect not in playerPlacementList:
+
+            
+                    playerScoreDict[userInputPlayerSelect] = playerScoreDict.get(userInputPlayerSelect, 0) + soloPoints[i-1]
+                    
+                    playerPlacementList.append(userInputPlayerSelect)
+                    
+             
+                   
+                    break
+
+
+        for player in playerScoreDict.keys():
+            if player not in playerPlacementList:
+                playerScoreDict[player] = playerScoreDict.get(player, 0) + 3
+        
+
+        playerPlacementList = []
+        print(f"--> PLAYER SCORES AFTER THE {selectedEvent} EVENT <--\n{playerScoreDict}")
+#####################################==-- Team event placement###################################################################    
     else:
         print(f"The next TEAM event is {selectedEvent}!")
 
