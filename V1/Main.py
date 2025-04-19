@@ -1,11 +1,13 @@
 #tracks each teams score
-teamScoreDict = {}
+teamScoreDict = {"team1":0,"team2":0,"team3":0,"team4":0}
 
-# tracks the names of players in each team
-teamPlayerList = [[],[],[],[]]
-
+teamPlacementList = []
 # tracks the scores for each solo player
 playerScoreDict = {}
+
+playerPlacementList = []
+# tracks the names of players in each team
+teamPlayerList = [[],[],[],[]]
 
 # tracks the SOLO players taking part in each event
 eventPlayersList=[[],[],[],[],[]]
@@ -14,17 +16,20 @@ teamPoints = [15,10,8,4]
 
 soloPoints = [15, 12,10, 8, 6, 3]
 
-###############################################################################################################
+###################################==-- ADD TEAMS AND THEIR PLAYERS --==########################################################################
 
 print("TEAM INTRO")
 
 # NOTE COMMENT CODE BACK IN LATER
 
-# # whle loop for adding each team and asigning their players
+# whle loop for adding each team and asigning their players
 # while True:
 
 #     # Loops for each team
 #     for teamNumber in range(1,5):
+#         # create a team and store in the dict
+#         teamScoreDict[f"team-{teamNumber}"] = 0
+
 #         print(f"ADDING PLAYERS TO TEAM {teamNumber}")
         
 #         # Loops for each player in team
@@ -52,7 +57,7 @@ print("TEAM INTRO")
 #     break
 
 
-###############################################################################################################
+#######################################==-- ADD SOLO PLAYERS AND ASIGN THEM EVENTS --==########################################################################
 
 # NOTE add player section starts here
 
@@ -113,20 +118,21 @@ print("TEAM INTRO")
 #         counter += 1
 
 
-###############################################################################################################
+#######################################==-- EVENT SELECTION --==############################################################
 
 # holds the academic and sporty events, first list is solo, second is team
 EventsList = [
-                 [[1],[]], # Solo events
-                 [[],[]]  # Team events
+                 [[],[]], # Solo events
+                 [["gang war","cooking"],["hitting on your sister"]]  # Team events
                  ]
 
-numberOfEventsInList = len(EventsList[0][0] + EventsList[0][1] + EventsList[1][0] + EventsList[1][1])
+
 
 
     
 while True:
-    
+    numberOfEventsInList = len(EventsList[0][0] + EventsList[0][1] + EventsList[1][0] + EventsList[1][1])
+
     if numberOfEventsInList == 0:
         print("all events ran, bracking loop")
         break
@@ -135,12 +141,13 @@ while True:
 
 
         userInput = int(input("1 = Solo\n2 = Team\n>>> "))
+        
 
         # if there are accedemic events left for the selected group, show those events
         if EventsList[userInput-1][0] != []:
             print("showing all avliable acedemic items in list\n")
-            print(EventsList[userInput-1][0])
-            output = "A"
+            output = EventsList[userInput-1][0]
+            eventType = userInput
             break
 
         else:
@@ -153,29 +160,64 @@ while True:
                 # if that is also empty, 
                 if EventsList[userInput-1][1] == []:
                     print("This group have performed all their events. But, there are still events in the other group")
-                    print(EventsList[userInput % 2][1])
-                    output = "B"
+                    output = EventsList[userInput % 2][1]
+                    eventType = userInput + 1 % 2
                     break
         
                 else:
                     print("Showing sporing events for selected group\n")
-                    print(EventsList[userInput-1][1])
-                    output = "C"
+                    output = EventsList[userInput-1][1]
+                    eventType = userInput
                     break
         
             # otherwise, show the accedemic events for the other group
             else:    
                 print("acmd empty: here are the remainging acmd events in the other group\n")
-                print(EventsList[userInput % 2][0])
-                output = "D"
+                output = EventsList[userInput % 2][0]
+                eventType = userInput + 1 % 2
                 break
         
 
 
 
-    print(output)
+    userInputEvent = input((f" Here is your list of avaliable options to select from:\n{output}\n>>> "))
 
-
+    if userInputEvent in output:
+        selectedEvent = userInputEvent
+       
+        print(f"Removing {userInputEvent}")
+       
+        output.remove(userInputEvent)
+       
+        print("\n\n{EventsList}")
+        
+    else:
+        print("Invalid selection, please try again")
 ###############################################################################################################           
 
+
+    if eventType == 1:
+        pass
+
+    else:
+        print(f"The next TEAM event is {selectedEvent}!")
+
+        for i in range(1,5):
+            while True:
+                userInputTeamSelect = input(f"Which team came in {i} Position?\n>>> ")
+
+                if userInputTeamSelect in teamScoreDict.keys() and userInputTeamSelect not in teamPlacementList:
+
+            
+                    teamScoreDict[userInputTeamSelect] = teamScoreDict.get(userInputTeamSelect, 0) + teamPoints[i-1]
+                    
+                    teamPlacementList.append(userInputTeamSelect)
+                    
+             
+                    print(teamScoreDict)
+                    break
+        teamPlacementList = []
+
 print("this is the end")
+
+
