@@ -8,7 +8,7 @@ teamNameList = []
 teamPlacementList = []
 
 # tracks the names of players in each team
-teamPlayerList = [[],[],[],[]]
+teamPlayerList = [[],[],[],[],[]]
 
 # tracks the scores for each solo player
 playerScoreDict = {}
@@ -20,6 +20,7 @@ playerPlacementList = []
 eventPlayersList=[[],[],[],[],[]]
 # how many points will be awarded to each team based on their placement
 teamPoints = [15,10,8,4]
+
 # how many points will be awarded to each solo player based on their placement
 soloPoints = [15,12,10, 8, 6, 3]
 
@@ -32,7 +33,8 @@ placasementPrefixes = ["1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10
 ###################################==-- ADD TEAMS AND THEIR PLAYERS --==########################################################################
 
 print("TEAM INTRO")
-
+counter = 0
+teamName = 0
 # NOTE COMMENT CODE BACK IN LATER
 
 # whle loop for adding each team and asigning their players
@@ -40,10 +42,27 @@ while True:
 
     # Loops for each team
     for teamNumber in range(1,5):
-        # create a team and store in the dict
-        teamScoreDict[f"Team-{teamNumber}"] = 0
 
-        print(f"ADDING PLAYERS TO TEAM {teamNumber}")
+
+        while True:
+            teamNameInput = input("What name do you want to give this team: If you want a defult name, leave this blank and hit enter\n>>> ")
+
+            if teamNameInput ==  "":
+                teamName = f"Team-{teamNumber}"
+                teamScoreDict[f"TEAM-{teamNumber}"] = 0
+                break
+
+            else:
+                teamName = teamNameInput
+                teamScoreDict[teamName] = 0
+                break
+
+
+
+        # create a team and store in the dict
+        
+
+        print(f"ADDING PLAYERS TO {teamName}")
         
         # Loops for each player in team
         for playerNumber in range(1,6):
@@ -51,11 +70,16 @@ while True:
             # loops untill valid player is added to team
             while True:
 
+                
                 userInput = input(f"Enter the name for player {playerNumber} >>> ")
                 
+
+                
+
+
                 # validates input:
                 # NOTE Add more and propper validation later TOM!!!
-
+                
                 if userInput in teamPlayerList[int(teamNumber)-1]:
                     print("entered name is already in list, please try again")
                
@@ -64,6 +88,33 @@ while True:
 
                 else:
                     teamPlayerList[int(teamNumber)-1].append(userInput)
+                    
+
+                    while True:
+                        userInputEvent = input("\n1-5 = single event, 6 = all solo events,  = no solo events >>> ")
+                        
+                        # if user selected all events, add player to all event lists and print result
+                        if userInputEvent == "":
+                            break
+
+                        elif int(userInputEvent) == 6:
+                            for i in range(len(eventPlayersList)):
+                                eventPlayersList[i].append(userInput)
+                                playerScoreDict[userInput] = 0
+                            break
+                        
+                        #else if user entered value between 1 and 5, add player to event list at index
+                        elif int(userInputEvent) >0 and int(userInputEvent) <6:
+                            
+                            eventPlayersList[int(userInputEvent)-1].append(userInput)
+                            playerScoreDict[userInput] = 0
+                            break
+
+
+                        else:
+                            print("INVALID INPUT")
+
+                            break
                     break
         #prints out the team and all of its members
         print(f"Members of team {teamNumber} are: {teamPlayerList[int(teamNumber)-1]} \n\n\n")
@@ -75,7 +126,7 @@ while True:
 # # NOTE add player section starts here
 
 
-counter = 0
+
 
 #prints instructions of the different commands to the screen 
 commands = "\n>>> Special Commands <<<\n\n. '-pl' = print out 5 lists each containg the players taking part in that event\n. " \
@@ -114,6 +165,44 @@ while True:
             print(f" Event {count + 1} - {eventPlayersList[count]}" + f" Count = {len(eventPlayersList[count])}")
             count += 1
     
+    # command to remove and replace a player form both teams and solo events
+    elif userInputplayer == "-rm":
+        splitText = userInputplayer.split("|")
+        while True:
+
+            userInputFind = input("Who do you want to replace?\n>>> ")
+
+            if  userInputFind in playerScoreDict:
+                
+                userInputReplace = input("Who do you want to replace them with?")
+
+                if userInputReplace not in playerScoreDict:
+                    
+                    for i, sublist in enumerate(eventPlayersList):
+                        for j, item in enumerate(sublist):
+                            if item == userInputFind:
+                                eventPlayersList[i][j] = userInputReplace
+                
+                    
+
+                else:
+                    print(f"{userInputReplace} already exists, plaese try another replacement name")
+                
+                for i, sublist in enumerate(teamPlayerList):
+                        for j, item in enumerate(sublist):
+                            if item == userInputFind:
+                                teamPlayerList[i][j] = userInputReplace
+
+               
+                if userInputFind in playerScoreDict:
+                    playerScoreDict[userInputReplace] = playerScoreDict.pop(userInputFind)
+                    
+                print(f"Removing {userInputFind} and replacing with {userInputReplace}")
+                 
+
+
+
+
     # prints commands instructions again
     elif userInputplayer == "help":
         print(commands)
@@ -125,6 +214,10 @@ while True:
 
     elif userInputplayer == "":
         print("Please enter a players name and please try again")
+
+
+
+
 
     else:
         playerScoreDict[userInputplayer] = 0
@@ -317,6 +410,7 @@ sorteddict = sorted(teamScoreDict.items(), key= lambda x:x[1], reverse=True)
 convertdict = dict(sorteddict)
 
 # creates the centerd text that says who the winner is
+#the winner is the first item pair in the sorted dict
 Winner = list(convertdict.keys())[0]
 Winner = f"{Winner} WINS!"
 centeredWinner = Winner.center(50)
