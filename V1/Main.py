@@ -52,7 +52,6 @@ while True:
 
             # loops untill valid player is added to team
             while True:
-
                 userInput = input(f"Enter the name for player {playerNumber} >>> ")
                 
                 # validates input:
@@ -66,6 +65,29 @@ while True:
 
                 else:
                     teamPlayerList[int(teamNumber)-1].append(userInput)
+
+                    while True:
+                        userInputEvent = input("\n1-5 = single event, '' = all solo events >>> ")
+                        
+                        # if user selected all events, add player to all event lists and print result
+                        if userInputEvent == "":
+                            for i in range(len(eventPlayersList)):
+                                eventPlayersList[i].append(userInput)
+                                playerScoreDict[userInput] = 0
+                            break
+                        
+                        #else if user entered value between 1 and 5, add player to event list at index
+                        elif int(userInputEvent) >0 and int(userInputEvent) <6:
+                            
+                            eventPlayersList[int(userInputEvent)-1].append(userInput)
+                            playerScoreDict[userInput] = 0
+                            break
+
+                        
+                        else:
+                            print("INVALID INPUT")
+
+                            break
                     break
         #prints out the team and all of its members
         print(f"Members of team {teamNumber} are: {teamPlayerList[int(teamNumber)-1]} \n\n\n")
@@ -128,6 +150,11 @@ while True:
     elif userInputplayer == "":
         print("Please enter a players name and please try again")
 
+    
+
+
+
+
     else:
         playerScoreDict[userInputplayer] = 0
 
@@ -135,10 +162,10 @@ while True:
 
         # user selects which events the newly added player will take part in
         while True:
-            userInputEvent = input("\n1-5 = single event, '' = all solo events >>> ")
+            userInputEvent = int(input("\n1-5 = single event, '' = all solo events >>> "))
             
             # if user selected all events, add player to all event lists and print result
-            if userInputEvent == "":
+            if userInputEvent == 6:
                 for i in range(len(eventPlayersList)):
                     eventPlayersList[i].append(userInputplayer)
 
