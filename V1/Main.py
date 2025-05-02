@@ -18,8 +18,10 @@ playerPlacementList = []
 
 # tracks the SOLO players taking part in each event
 eventPlayersList=[[],[],[],[],[]]
+
 # how many points will be awarded to each team based on their placement
 teamPoints = [15,10,8,4]
+
 # how many points will be awarded to each solo player based on their placement
 soloPoints = [15,12,10, 8, 6, 3]
 
@@ -317,6 +319,7 @@ sorteddict = sorted(teamScoreDict.items(), key= lambda x:x[1], reverse=True)
 convertdict = dict(sorteddict)
 
 # creates the centerd text that says who the winner is
+#the winner is the first item pair in the sorted dict
 Winner = list(convertdict.keys())[0]
 Winner = f"{Winner} WINS!"
 centeredWinner = Winner.center(50)
