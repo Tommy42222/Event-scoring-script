@@ -88,7 +88,7 @@ while True:
 
                 else:
                     teamPlayerList[int(teamNumber)-1].append(userInput)
-                    counter += 1
+                    
 
                     while True:
                         userInputEvent = input("\n1-5 = single event, 6 = all solo events,  = no solo events >>> ")
